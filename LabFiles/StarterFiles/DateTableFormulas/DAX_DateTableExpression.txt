@@ -1,0 +1,22 @@
+Order Date = 
+VAR MinYear = Year ( MIN ( Orders[Order Date] ) )
+VAR MaxYear = Year ( MAX ( Orders[Order Date] ) )
+RETURN
+ADDCOLUMNS ( 
+	FILTER (
+			CALENDARAUTO ( ),
+			YEAR ( [Date] ) >= MinYear &&
+			YEAR ( [Date] ) <= MaxYear
+			),
+		"Order Year", YEAR ( [Date] ),
+		"Order Quarter Number", INT ( FORMAT ( [Date] , "q" ) ),
+		"Order Quarter", "Q" & INT ( FORMAT ( [Date] , "q" ) ),
+		"Order Month Number", MONTH ( [Date] ),
+		"Order Month", FORMAT ( [Date], "mmmm" ),
+		"Order Week Day Number", WEEKDAY ( [Date] ),
+		"Order Week Day", FORMAT ( [Date], "dddd" ),
+		"Order Year Month Number", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+		"Order Year Month", FORMAT ( [Date], "mmmm" ) & " " & YEAR ( [Date] ),
+		"Order Year Quarter Number", Year ( [Date] ) * 100 + INT ( FORMAT ( [Date], "q" ) ) ,
+		"Order Year Quarter", "Q" & FORMAT ( [Date], "q" ) & "-" & YEAR ([Date] )
+	)
